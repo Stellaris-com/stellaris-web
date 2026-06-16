@@ -1,29 +1,24 @@
-"use client"
+"use client";
 
-import { type FormEvent, useState } from "react"
-import { Loader2, MessageSquare } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import type { LoginCredentials } from "@/lib/types/domain"
+import { type FormEvent, useState } from "react";
+import { Loader2, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import type { LoginCredentials } from "@/lib/types/domain";
+import Link from "next/link";
 
 interface LoginScreenProps {
-  onLogin: (credentials: LoginCredentials) => void
-  isLoading: boolean
-  error: string | null
+  onLogin: (credentials: LoginCredentials) => void;
+  isLoading: boolean;
+  error: string | null;
 }
 
-/**
- * Tela de login (componente de apresentação).
- *
- * Gerencia apenas o estado dos campos (regra de renderização) e delega o login
- * via `onLogin`. Não conhece nenhuma regra de negócio.
- */
 export function LoginScreen({ onLogin, isLoading, error }: LoginScreenProps) {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   function handleSubmit(event: FormEvent) {
-    event.preventDefault()
-    onLogin({ username, password })
+    event.preventDefault();
+    onLogin({ username, password });
   }
 
   return (
@@ -33,13 +28,19 @@ export function LoginScreen({ onLogin, isLoading, error }: LoginScreenProps) {
           <span className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
             <MessageSquare className="size-6" aria-hidden="true" />
           </span>
-          <h1 className="text-2xl font-bold text-foreground text-balance">Que bom te ver de novo!</h1>
+          <h1 className="text-2xl font-bold text-foreground text-balance">
+            Que bom te ver de novo!
+          </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Entre para conversar em tempo real no Nexus.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-5"
+          noValidate
+        >
           <div className="flex flex-col gap-2">
             <label
               htmlFor="username"
@@ -99,11 +100,14 @@ export function LoginScreen({ onLogin, isLoading, error }: LoginScreenProps) {
             )}
           </Button>
 
-          <p className="text-xs text-muted-foreground">
-            Dica: qualquer usuário (3+ caracteres) e senha (4+ caracteres) funcionam nesta POC.
-          </p>
+          <Link
+            className="text-center text-xs  text-blue-400"
+            href={"/register"}
+          >
+            Caso não tenha uma conta cadastre-se.
+          </Link>
         </form>
       </div>
     </main>
-  )
+  );
 }
