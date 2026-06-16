@@ -46,6 +46,8 @@ export interface LoginCredentials {
   readonly password: string
 }
 
+export interface RegisterCredentials extends LoginCredentials{} 
+
 /** Estado de uma conexão WebSocket, consumido pela UI para feedback visual. */
 export type ConnectionStatus =
   | "idle"

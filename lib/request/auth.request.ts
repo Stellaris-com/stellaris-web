@@ -3,7 +3,7 @@
  *
  * Em modo mock, simula a resposta do backend com um pequeno atraso de rede.
  */
-import type { LoginCredentials } from "@/lib/types/domain"
+import type { LoginCredentials, RegisterCredentials } from "@/lib/types/domain"
 import type { LoginResponseDTO, UserDTO } from "@/lib/types/dto"
 import { httpClient } from "./http-client"
 
@@ -11,6 +11,10 @@ import { httpClient } from "./http-client"
 
 export function loginRequest(credentials: LoginCredentials): Promise<LoginResponseDTO> {
   return httpClient.post<LoginResponseDTO>("/auth/login", credentials)
+}
+
+export function registerRequest(credentials: RegisterCredentials): Promise<LoginResponseDTO> {
+  return httpClient.post<LoginResponseDTO>("/auth/register", credentials)
 }
 
 export function getUserRequest(accessToken: string): Promise<UserDTO>{
