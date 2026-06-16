@@ -14,6 +14,9 @@ export interface User {
   /** Cor usada no avatar quando não há imagem (padrão Discord). */
   readonly accentColor: string
   readonly status: PresenceStatus
+  readonly role?: string
+  readonly roomsCreated?: string
+  readonly messages?: Number
 }
 
 export interface Server {

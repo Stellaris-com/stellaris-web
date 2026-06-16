@@ -4,7 +4,7 @@
  * Aplica regras de negócio (validação de credenciais), chama a request e mapeia
  * o DTO de resposta para o domínio. Lança erros de domínio legíveis pela UI.
  */
-import { loginRequest } from "@/lib/request/auth.request"
+import { getUserRequest, loginRequest } from "@/lib/request/auth.request"
 import type { AuthSession, LoginCredentials } from "@/lib/types/domain"
 import { mapUser } from "./mappers"
 
@@ -27,10 +27,17 @@ function validate(credentials: LoginCredentials): void {
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthSession> {
     validate(credentials)
-    const dto = await loginRequest({
+    
+    const loginDTO = await loginRequest({
       username: credentials.username.trim(),
       password: credentials.password,
     })
-    return { token: dto.token, user: mapUser(dto.user) }
+
+    const getUserDTO = await getUserRequest(loginDTO.accessToken)
+    
+    return { token: loginDTO.accessToken, user: mapUser(getUserDTO) }
   },
+  
+  // register
+  // logout
 }

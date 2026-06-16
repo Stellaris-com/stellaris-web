@@ -7,6 +7,7 @@
 import type { Message, Server, User } from "@/lib/types/domain"
 import type { MessageDTO, ServerDTO, UserDTO } from "@/lib/types/dto"
 
+
 /** Deriva a sigla do servidor a partir do nome (ex.: "Design Lab" -> "DL"). */
 function deriveAcronym(name: string): string {
   return name
@@ -22,8 +23,11 @@ export function mapUser(dto: UserDTO): User {
   return {
     id: dto.id,
     username: dto.username,
-    accentColor: dto.accent_color,
-    status: dto.status,
+    accentColor: "#9453ED",
+    status: "online",
+    role: dto.role,
+    messages: dto.messages,
+    roomsCreated: dto.roomsCreated
   }
 }
 

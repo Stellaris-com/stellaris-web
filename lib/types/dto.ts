@@ -6,13 +6,13 @@
  * ser ajustada — a UI e os hooks permanecem intactos.
  */
 
-import type { PresenceStatus } from "./domain"
 
 export interface UserDTO {
-  id: string
-  username: string
-  accent_color: string
-  status: PresenceStatus
+  id: string,
+  messages: Number,
+  username: string,
+  roomsCreated: string,
+  role: string
 }
 
 export interface ServerDTO {
@@ -29,9 +29,13 @@ export interface MessageDTO {
 }
 
 export interface LoginResponseDTO {
-  token: string
-  user: UserDTO
+  accessToken: string
 }
+
+export interface GetUserResponseDTO {
+
+}
+
 
 /* -------------------------------------------------------------------------- */
 /*                          Contratos do WebSocket                            */
