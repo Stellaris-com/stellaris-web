@@ -16,8 +16,16 @@ export interface UserDTO {
 }
 
 export interface ServerDTO {
-  id: string
-  name: string
+  id: string;
+  name: string;
+  simpleDescription: string;
+  membersOfRoom: ServerMembersDTO[];
+}
+
+interface ServerMembersDTO {
+  id: string;
+  username: string;
+  typeOfMember: string;
 }
 
 export interface MessageDTO {

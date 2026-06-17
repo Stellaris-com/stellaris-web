@@ -4,31 +4,20 @@
  * Concentram a tradução do formato do backend para os modelos consumidos pela
  * UI. É o único lugar que conhece os dois formatos ao mesmo tempo.
  */
-import type { Message, Server, User } from "@/lib/types/domain"
-import type { MessageDTO, ServerDTO, UserDTO } from "@/lib/types/dto"
-
-
-/** Deriva a sigla do servidor a partir do nome (ex.: "Design Lab" -> "DL"). */
-function deriveAcronym(name: string): string {
-  return name
-    .trim()
-    .split(/\s+/)
-    .map((word) => word[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase()
-}
+import type { Message, Server, User } from "@/lib/types/domain";
+import type { MessageDTO, ServerDTO, UserDTO } from "@/lib/types/dto";
+import { deriveAcronym, getUserAccentColor } from "../utils";
 
 export function mapUser(dto: UserDTO): User {
   return {
     id: dto.id,
     username: dto.username,
-    accentColor: "#9453ED",
+    accentColor: getUserAccentColor(dto.id),
     status: "online",
     role: dto.role,
     messages: dto.messages,
-    roomsCreated: dto.roomsCreated
-  }
+    roomsCreated: dto.roomsCreated,
+  };
 }
 
 export function mapServer(dto: ServerDTO): Server {
@@ -36,7 +25,14 @@ export function mapServer(dto: ServerDTO): Server {
     id: dto.id,
     name: dto.name,
     acronym: deriveAcronym(dto.name),
-  }
+    members: dto.membersOfRoom.map((member) => ({
+      id: member.id,
+      username: member.username,
+      accentColor: getUserAccentColor(dto.id),
+      status: "online",
+      role: member.typeOfMember,
+    })),
+  };
 }
 
 export function mapMessage(dto: MessageDTO): Message {
@@ -46,5 +42,5 @@ export function mapMessage(dto: MessageDTO): Message {
     author: mapUser(dto.author),
     content: dto.content,
     createdAt: dto.created_at,
-  }
+  };
 }

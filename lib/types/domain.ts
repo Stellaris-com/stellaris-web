@@ -6,47 +6,48 @@
  * camada de `services` é responsável por mapear DTO -> domínio.
  */
 
-export type PresenceStatus = "online" | "idle" | "dnd" | "offline"
+export type PresenceStatus = "online" | "idle" | "dnd" | "offline";
 
 export interface User {
-  readonly id: string
-  readonly username: string
+  readonly id: string;
+  readonly username: string;
   /** Cor usada no avatar quando não há imagem (padrão Discord). */
-  readonly accentColor: string
-  readonly status: PresenceStatus
-  readonly role?: string
-  readonly roomsCreated?: string
-  readonly messages?: Number
+  readonly accentColor: string;
+  readonly status: PresenceStatus;
+  readonly role?: string;
+  readonly roomsCreated?: string;
+  readonly messages?: Number;
 }
 
 export interface Server {
-  readonly id: string
-  readonly name: string
+  readonly id: string;
+  readonly name: string;
   /** Sigla exibida no ícone do servidor (ex.: "Nexus" -> "NX"). */
-  readonly acronym: string
+  readonly acronym: string;
+  readonly members: User[];
 }
 
 export interface Message {
-  readonly id: string
-  readonly serverId: string
-  readonly author: User
-  readonly content: string
+  readonly id: string;
+  readonly serverId: string;
+  readonly author: User;
+  readonly content: string;
   /** ISO string para facilitar serialização entre camadas. */
-  readonly createdAt: string
+  readonly createdAt: string;
 }
 
 export interface AuthSession {
-  readonly token: string
-  readonly user: User
+  readonly token: string;
+  readonly user: User;
 }
 
 /** Credenciais de login submetidas pela UI. */
 export interface LoginCredentials {
-  readonly username: string
-  readonly password: string
+  readonly username: string;
+  readonly password: string;
 }
 
-export interface RegisterCredentials extends LoginCredentials{} 
+export interface RegisterCredentials extends LoginCredentials {}
 
 /** Estado de uma conexão WebSocket, consumido pela UI para feedback visual. */
 export type ConnectionStatus =
@@ -54,4 +55,4 @@ export type ConnectionStatus =
   | "connecting"
   | "connected"
   | "reconnecting"
-  | "disconnected"
+  | "disconnected";
