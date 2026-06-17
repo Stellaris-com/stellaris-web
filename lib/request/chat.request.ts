@@ -1,38 +1,28 @@
 /**
- * Request de chat: fachada fina sobre o SocketClient.
- *
- * Expõe apenas as operações de transporte (conectar, entrar em servidor, enviar
- * mensagem, assinar eventos). Toda interpretação dos dados é feita no service.
+ * Requests de chat: apenas acesso bruto à API.
  */
-import { getSocketClient } from "./socket/socket-factory"
-import type { EventListener, StatusListener, Unsubscribe } from "./socket/socket-client"
+import { ChatMessageResponseDTO } from "../types/dto";
+import { httpClient } from "./http-client";
 
-export const chatRequest = {
-  connect(token: string): void {
-    getSocketClient().connect(token)
-  },
+export interface SendChatMessageBody {
+  message: string;
+}
 
-  disconnect(): void {
-    getSocketClient().disconnect()
-  },
+export function fetchRoomMessagesRequest(
+  accessToken: string,
+  roomId: string,
+): Promise<ChatMessageResponseDTO[]> {
+  return httpClient.get<ChatMessageResponseDTO[]>(`/messages/${roomId}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+}
 
-  joinServer(serverId: string): void {
-    getSocketClient().send({ type: "join_server", payload: { serverId } })
-  },
-
-  sendMessage(serverId: string, content: string): void {
-    getSocketClient().send({ type: "send_message", payload: { serverId, content } })
-  },
-
-  onEvent(listener: EventListener): Unsubscribe {
-    return getSocketClient().onEvent(listener)
-  },
-
-  onStatusChange(listener: StatusListener): Unsubscribe {
-    return getSocketClient().onStatusChange(listener)
-  },
-
-  getStatus() {
-    return getSocketClient().getStatus()
-  },
+export function sendRoomMessageRequest(
+  accessToken: string,
+  roomId: string,
+  body: SendChatMessageBody,
+): Promise<ChatMessageResponseDTO> {
+  return httpClient.post<ChatMessageResponseDTO>(`/messages/${roomId}`, body, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 }

@@ -39,10 +39,7 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
   const { open: openJoinServerModal, close: closeJoinServerModal } =
     useJoinServerModal();
 
-  const { status, messages, members, sendMessage } = useChat(
-    session.token,
-    selectedId,
-  );
+  const { messages, sendMessage } = useChat(session.token, selectedId);
 
   const handlejoinonServerModal = async (roomId: string) => {
     await joinServer(roomId);
@@ -63,7 +60,7 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
       <ChatPanel
         serverName={selectedServer?.name ?? "Carregando..."}
         channelName={DEFAULT_CHANNEL}
-        status={status}
+        status={"connected"}
         messages={messages}
         onSend={sendMessage}
       />

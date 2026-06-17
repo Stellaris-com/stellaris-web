@@ -40,8 +40,19 @@ export interface LoginResponseDTO {
   accessToken: string
 }
 
-export interface GetUserResponseDTO {
+export interface GetUserResponseDTO { }
 
+
+export interface ChatUserResponseDTO {
+  id: string;
+  username: string;
+}
+
+export interface ChatMessageResponseDTO {
+  id: string;
+  message: string;
+  createdAt: string;
+  user: ChatUserResponseDTO;
 }
 
 

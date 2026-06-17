@@ -56,3 +56,15 @@ export type ConnectionStatus =
   | "connected"
   | "reconnecting"
   | "disconnected";
+
+export interface ChatUser {
+  id: string;
+  username: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  message: string;
+  createdAt: string;
+  user: ChatUser;
+}

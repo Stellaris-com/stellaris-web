@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react"
 import { Hash } from "lucide-react"
-import type { Message } from "@/lib/types/domain"
+import type { ChatMessage, Message } from "@/lib/types/domain"
 import { MessageItem } from "./message-item"
 
 interface MessageListProps {
-  messages: Message[]
+  messages: ChatMessage[]
   channelName: string
 }
 

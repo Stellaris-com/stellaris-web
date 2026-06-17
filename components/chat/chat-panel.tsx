@@ -2,7 +2,7 @@
 
 import { Hash, Users } from "lucide-react"
 import { ConnectionBadge } from "@/components/shared/connection-badge"
-import type { ConnectionStatus, Message } from "@/lib/types/domain"
+import type { ChatMessage, ConnectionStatus, Message } from "@/lib/types/domain"
 import { MessageInput } from "./message-input"
 import { MessageList } from "./message-list"
 
@@ -10,7 +10,7 @@ interface ChatPanelProps {
   serverName: string
   channelName: string
   status: ConnectionStatus
-  messages: Message[]
+  messages: ChatMessage[]
   onSend: (content: string) => void
 }
 
