@@ -69,7 +69,7 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
       />
 
       <MembersList
-        members={members}
+        members={selectedServer?.members ?? []}
         currentUserId={session.user.id}
         currentUser={session.user}
         onLogout={onLogout}
