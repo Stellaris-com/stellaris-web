@@ -23,8 +23,11 @@ export function entryServerRequest(
   accessToken: string,
   roomId: string,
 ): Promise<ServerDTO> {
-  return httpClient.post<ServerDTO>(`/rooms/${roomId}/enter`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
+  return httpClient.post<ServerDTO>(
+    `/rooms/${roomId}/enter`,
+    {},
+    {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    },
+  );
 }
-

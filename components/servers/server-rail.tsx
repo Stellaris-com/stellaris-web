@@ -1,26 +1,36 @@
-"use client"
+"use client";
 
-import { Compass, Plus } from "lucide-react"
-import { cn } from "@/lib/utils"
-import type { Server } from "@/lib/types/domain"
+import { Compass, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { Server } from "@/lib/types/domain";
 
 interface ServerRailProps {
-  servers: Server[]
-  selectedId: string | null
-  onSelect: (serverId: string) => void
+  servers: Server[];
+  selectedId: string | null;
+  onSelect: (serverId: string) => void;
+  onClick: () => void;
 }
 
 /**
  * Barra lateral esquerda com os servidores ativos (apresentação pura).
  * Reproduz o "rail" de ícones do Discord, incluindo o pílula de seleção.
  */
-export function ServerRail({ servers, selectedId, onSelect }: ServerRailProps) {
+export function ServerRail({
+  servers,
+  selectedId,
+  onSelect,
+  onClick,
+}: ServerRailProps) {
   return (
     <nav
       aria-label="Servidores"
       className="flex h-full w-[72px] shrink-0 flex-col items-center gap-2 bg-rail py-3"
     >
-      <RailButton aria-label="Mensagens diretas" active className="bg-primary text-primary-foreground">
+      <RailButton
+        aria-label="Mensagens diretas"
+        active
+        className="bg-primary text-primary-foreground"
+      >
         <Compass className="size-6" aria-hidden="true" />
       </RailButton>
 
@@ -28,7 +38,7 @@ export function ServerRail({ servers, selectedId, onSelect }: ServerRailProps) {
 
       <ul className="flex flex-1 flex-col items-center gap-2 overflow-y-auto">
         {servers.map((server) => {
-          const isActive = server.id === selectedId
+          const isActive = server.id === selectedId;
           return (
             <li key={server.id} className="relative flex w-full justify-center">
               <span
@@ -52,26 +62,32 @@ export function ServerRail({ servers, selectedId, onSelect }: ServerRailProps) {
                 <span className="text-sm font-semibold">{server.acronym}</span>
               </RailButton>
             </li>
-          )
+          );
         })}
       </ul>
 
       <RailButton
         aria-label="Adicionar servidor"
         className="bg-card text-online hover:bg-online hover:text-primary-foreground"
+        onClick={onClick}
       >
         <Plus className="size-6" aria-hidden="true" />
       </RailButton>
     </nav>
-  )
+  );
 }
 
 interface RailButtonProps extends React.ComponentProps<"button"> {
-  active?: boolean
+  active?: boolean;
 }
 
 /** Botão circular do rail que vira "squircle" quando ativo (efeito Discord). */
-function RailButton({ active, className, children, ...props }: RailButtonProps) {
+function RailButton({
+  active,
+  className,
+  children,
+  ...props
+}: RailButtonProps) {
   return (
     <button
       type="button"
@@ -84,5 +100,5 @@ function RailButton({ active, className, children, ...props }: RailButtonProps) 
     >
       {children}
     </button>
-  )
+  );
 }
