@@ -33,11 +33,12 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
     isLoading: isLoadingOnServerDiscovery,
     joinServer,
     servers,
+    refresh: refreshOnUserServerDiscovery,
   } = useServerDiscovery(session.token);
-  
+
   const { open: openJoinServerModal, close: closeJoinServerModal } =
     useJoinServerModal();
-  
+
   const { status, messages, members, sendMessage } = useChat(
     session.token,
     selectedId,
@@ -46,6 +47,7 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
   const handlejoinonServerModal = async (roomId: string) => {
     await joinServer(roomId);
     await refresh();
+    await refreshOnUserServerDiscovery();
     closeJoinServerModal();
   };
 
