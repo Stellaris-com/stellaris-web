@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatWorkspace } from "@/components/workspace/chat-workspace";
+import { JoinServerModalProvider } from "@/context/provider/joinServerModalProvider";
 import { useAuth } from "@/hooks/use-auth";
 import { redirect } from "next/navigation";
 
@@ -13,7 +14,9 @@ export default function Page() {
 
   return (
     <main className="h-dvh w-full">
-      <ChatWorkspace session={session} onLogout={logout} />
+      <JoinServerModalProvider>
+        <ChatWorkspace session={session} onLogout={logout} />
+      </JoinServerModalProvider>
     </main>
   );
 }

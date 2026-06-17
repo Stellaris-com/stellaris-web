@@ -1,11 +1,14 @@
 "use client";
 
-import { useServers } from "@/hooks/use-servers";
 import { useChat } from "@/hooks/use-chat";
 import type { AuthSession } from "@/lib/types/domain";
 import { ServerRail } from "@/components/servers/server-rail";
 import { ChatPanel } from "@/components/chat/chat-panel";
 import { MembersList } from "@/components/members/members-list";
+import { JoinServerModal } from "../modals/joinServerModal";
+import { useJoinServerModal } from "@/hooks/use-join-server-modal";
+import { useMyServers } from "@/hooks/use-my-servers";
+import { useServerDiscovery } from "@/hooks/use-servers-discovery";
 
 interface ChatWorkspaceProps {
   session: AuthSession;
@@ -22,20 +25,37 @@ const DEFAULT_CHANNEL = "geral";
  * vive aqui — apenas a coordenação entre hooks.
  */
 export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
-  const { servers, selectedId, selectedServer, selectServer } = useServers(
-    session.token,
-  );
+  const { myServers, refresh, selectServer, selectedId, selectedServer } =
+    useMyServers(session.token);
+
+  const {
+    error,
+    isLoading: isLoadingOnServerDiscovery,
+    joinServer,
+    servers,
+  } = useServerDiscovery(session.token);
+  
+  const { open: openJoinServerModal, close: closeJoinServerModal } =
+    useJoinServerModal();
+  
   const { status, messages, members, sendMessage } = useChat(
     session.token,
     selectedId,
   );
 
+  const handlejoinonServerModal = async (roomId: string) => {
+    await joinServer(roomId);
+    await refresh();
+    closeJoinServerModal();
+  };
+
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-background text-foreground">
       <ServerRail
-        servers={servers}
+        servers={myServers}
         selectedId={selectedId}
         onSelect={selectServer}
+        onClick={openJoinServerModal}
       />
 
       <ChatPanel
@@ -51,6 +71,13 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
         currentUserId={session.user.id}
         currentUser={session.user}
         onLogout={onLogout}
+      />
+
+      <JoinServerModal
+        servers={servers}
+        error={error}
+        isLoading={isLoadingOnServerDiscovery}
+        onJoinServer={handlejoinonServerModal}
       />
     </div>
   );
