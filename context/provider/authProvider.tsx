@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -15,6 +16,7 @@ import type {
   RegisterCredentials,
 } from "@/lib/types/domain";
 import { AuthContext, AuthContextData } from "../model/authContext";
+import { StorageTokenError } from "@/lib/services/storageToken.service";
 
 type AuthStatus = "idle" | "loading" | "authenticated" | "error";
 
@@ -68,10 +70,41 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const logout = useCallback(() => {
-    setSession(null);
-    setStatus("idle");
-    setError(null);
+    setStatus("loading");
+
+    try {
+      authService.logout();
+    } catch (err) {
+      const message =
+        err instanceof StorageTokenError
+          ? err.message
+          : "Erro ao tentar realizar o logout";
+
+      setError(message);
+      setStatus("error");
+    } finally {
+      setSession(null);
+      setError(null);
+      setStatus("idle");
+    }
   }, []);
+
+  const restoreSession = useCallback(async () => {
+    setStatus("loading");
+
+    try {
+      const session = await authService.getSession();
+      setSession(session);
+      setStatus("authenticated");
+    } catch {
+      setStatus("idle");
+      setSession(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    void restoreSession();
+  }, [restoreSession]);
 
   const value = useMemo<AuthContextData>(
     () => ({
