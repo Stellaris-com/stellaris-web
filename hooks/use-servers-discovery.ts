@@ -20,7 +20,6 @@ export function useServerDiscovery(accessToken: string) {
     setError(null);
 
     try {
-      console.log(accessToken);
       const result = await serversService.list(accessToken);
 
       setServers(result);
