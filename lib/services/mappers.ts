@@ -28,7 +28,7 @@ export function mapServer(dto: ServerDTO): Server {
     members: dto.membersOfRoom.map((member) => ({
       id: member.id,
       username: member.username,
-      accentColor: getUserAccentColor(dto.id),
+      accentColor: getUserAccentColor(member.id),
       status: "online",
       role: member.typeOfMember,
     })),
