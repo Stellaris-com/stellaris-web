@@ -92,7 +92,7 @@ function RailButton({
     <button
       type="button"
       className={cn(
-        "group flex size-12 items-center justify-center overflow-hidden transition-all duration-200",
+        "group cursor-pointer ml-2 flex size-12 items-center justify-center overflow-hidden transition-all duration-200",
         active ? "rounded-2xl" : "rounded-3xl hover:rounded-2xl",
         className,
       )}
