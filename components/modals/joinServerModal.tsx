@@ -54,7 +54,7 @@ export function JoinServerModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-      <div className="relative flex max-h-[80vh] w-full max-w-2xl flex-col overflow-hidden rounded-md bg-card shadow-2xl">
+      <div className="relative pb-8.25 flex max-h-[80vh] w-full max-w-2xl flex-col overflow-hidden rounded-md bg-card shadow-2xl">
         <button
           onClick={close}
           className="absolute right-4 top-4 text-muted-foreground transition hover:text-foreground"
@@ -62,7 +62,7 @@ export function JoinServerModal({
           <X className="size-4" />
         </button>
 
-        <div className="border-b border-border p-6">
+        <div className=" p-6">
           <h2 className="text-2xl font-bold text-foreground">
             Descobrir servidores
           </h2>
@@ -83,11 +83,9 @@ export function JoinServerModal({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto no-scrollbar p-4">
           {error && (
-            <p className="mb-4 text-sm font-medium text-destructive">
-              {error}
-            </p>
+            <p className="mb-4 text-sm font-medium text-destructive">{error}</p>
           )}
 
           {filteredServers.length === 0 ? (
@@ -99,13 +97,12 @@ export function JoinServerModal({
           ) : (
             <div className="space-y-3">
               {filteredServers.map((server) => {
-                const isJoining =
-                  joiningServerId === server.id && isLoading;
+                const isJoining = joiningServerId === server.id && isLoading;
 
                 return (
                   <div
                     key={server.id}
-                    className="flex items-center justify-between rounded-md border border-border bg-background p-4 transition hover:border-primary/50"
+                    className="flex items-center justify-between rounded-lg  bg-background p-4 transition hover:border-primary/50"
                   >
                     <div className="flex items-center gap-4">
                       <div className="flex size-12 items-center justify-center rounded-xl bg-primary font-bold text-primary-foreground">
@@ -120,9 +117,7 @@ export function JoinServerModal({
                         <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
                           <Users className="size-3" />
 
-                          <span>
-                            {server.members.length} membros
-                          </span>
+                          <span>{server.members.length} membros</span>
                         </div>
                       </div>
                     </div>
