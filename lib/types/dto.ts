@@ -6,13 +6,12 @@
  * ser ajustada — a UI e os hooks permanecem intactos.
  */
 
-
 export interface UserDTO {
-  id: string,
-  messages: Number,
-  username: string,
-  roomsCreated: string,
-  role: string
+  id: string;
+  messages: Number;
+  username: string;
+  roomsCreated: string;
+  role: string;
 }
 
 export interface ServerDTO {
@@ -28,20 +27,23 @@ interface ServerMembersDTO {
   typeOfMember: string;
 }
 
+export interface CreateServerDTO {
+  name: string;
+}
+
 export interface MessageDTO {
-  id: string
-  server_id: string
-  author: UserDTO
-  content: string
-  created_at: string
+  id: string;
+  server_id: string;
+  author: UserDTO;
+  content: string;
+  created_at: string;
 }
 
 export interface LoginResponseDTO {
-  accessToken: string
+  accessToken: string;
 }
 
-export interface GetUserResponseDTO { }
-
+export interface GetUserResponseDTO {}
 
 export interface ChatUserResponseDTO {
   id: string;
@@ -55,7 +57,6 @@ export interface ChatMessageResponseDTO {
   user: ChatUserResponseDTO;
 }
 
-
 /* -------------------------------------------------------------------------- */
 /*                          Contratos do WebSocket                            */
 /* -------------------------------------------------------------------------- */
@@ -64,12 +65,18 @@ export interface ChatMessageResponseDTO {
 export type ClientEvent =
   | { type: "authenticate"; payload: { token: string } }
   | { type: "join_server"; payload: { serverId: string } }
-  | { type: "send_message"; payload: { serverId: string; content: string } }
+  | { type: "send_message"; payload: { serverId: string; content: string } };
 
 /** Eventos recebidos do servidor -> cliente. */
 export type ServerEvent =
-  | { type: "message_history"; payload: { serverId: string; messages: MessageDTO[] } }
+  | {
+      type: "message_history";
+      payload: { serverId: string; messages: MessageDTO[] };
+    }
   | { type: "message_created"; payload: MessageDTO }
-  | { type: "presence_update"; payload: { serverId: string; members: UserDTO[] } }
+  | {
+      type: "presence_update";
+      payload: { serverId: string; members: UserDTO[] };
+    };
 
-export type ServerEventType = ServerEvent["type"]
+export type ServerEventType = ServerEvent["type"];

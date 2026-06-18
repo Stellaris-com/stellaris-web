@@ -12,6 +12,7 @@ import { useServerDiscovery } from "@/hooks/use-servers-discovery";
 import { EmptyChatState } from "../chat/emptyChatState";
 import { CreateServerModal } from "../modals/createServerModal";
 import { useCreateServerModal } from "@/hooks/use-create-server-modal";
+import { CreateServerDTO } from "@/lib/types/dto";
 
 interface ChatWorkspaceProps {
   session: AuthSession;
@@ -35,6 +36,7 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
     error,
     isLoading: isLoadingOnServerDiscovery,
     joinServer,
+    createServer,
     servers,
     refresh: refreshOnUserServerDiscovery,
   } = useServerDiscovery(session.token);
@@ -54,8 +56,8 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
     closeJoinServerModal();
   };
 
-  const handleCreateServerModal = async () => {
-    // await createServer()
+  const handleCreateServerModal = async (serverContent: CreateServerDTO) => {
+    await createServer(serverContent);
     await refresh();
     closeCreateServerModal();
   };
@@ -99,8 +101,8 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
       />
 
       <CreateServerModal
-        error={null}
-        isLoading={false}
+        error={error}
+        isLoading={isLoadingOnServerDiscovery}
         onCreateServer={handleCreateServerModal}
       />
     </div>

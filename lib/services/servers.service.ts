@@ -3,12 +3,14 @@
  * domínio, ordenados por nome.
  */
 import {
+  createServerRequest,
   entryServerRequest,
   fetchMyServersRequest,
   fetchServersRequest,
 } from "@/lib/request/servers.request";
 import type { Server } from "@/lib/types/domain";
 import { mapServer } from "./mappers";
+import { CreateServerDTO } from "../types/dto";
 
 export class NotFoundError extends Error {
   constructor(message: string) {
@@ -30,6 +32,14 @@ export const serversService = {
 
   async entryServer(accessToken: string, roomId: string): Promise<Server> {
     const dto = await entryServerRequest(accessToken, roomId);
+    return mapServer(dto);
+  },
+
+  async createServer(
+    accessToken: string,
+    serverContent: CreateServerDTO,
+  ): Promise<Server> {
+    const dto = await createServerRequest(accessToken, serverContent);
     return mapServer(dto);
   },
 };

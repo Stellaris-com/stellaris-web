@@ -5,11 +5,12 @@ import { Loader2, Plus, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useCreateServerModal } from "@/hooks/use-create-server-modal";
+import { CreateServerDTO } from "@/lib/types/dto";
 
 interface CreateServerModalProps {
   isLoading: boolean;
   error: string | null;
-  onCreateServer: (name: string) => Promise<void>;
+  onCreateServer: (serverContent: CreateServerDTO) => Promise<void>;
 }
 
 export function CreateServerModal({
@@ -28,7 +29,9 @@ export function CreateServerModal({
 
     if (!name) return;
 
-    await onCreateServer(name);
+    await onCreateServer({
+      name: name,
+    });
 
     setServerName("");
     close();

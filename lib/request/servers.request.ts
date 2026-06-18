@@ -2,7 +2,7 @@
  * Request de servidores: busca a lista de servidores disponíveis (DTO bruto).
  */
 import { config } from "@/lib/config";
-import type { ServerDTO } from "@/lib/types/dto";
+import type { CreateServerDTO, ServerDTO } from "@/lib/types/dto";
 import { httpClient } from "./http-client";
 
 export function fetchServersRequest(accessToken: string): Promise<ServerDTO[]> {
@@ -30,4 +30,13 @@ export function entryServerRequest(
       headers: { Authorization: `Bearer ${accessToken}` },
     },
   );
+}
+
+export function createServerRequest(
+  accessToken: string,
+  serverContent: CreateServerDTO,
+): Promise<ServerDTO> {
+  return httpClient.post<ServerDTO>(`/rooms`, serverContent, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 }

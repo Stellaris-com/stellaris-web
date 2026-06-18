@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { NotFoundError, serversService } from "@/lib/services/servers.service";
 
 import type { Server } from "@/lib/types/domain";
+import { CreateServerDTO } from "@/lib/types/dto";
 
 export function useServerDiscovery(accessToken: string) {
   const [servers, setServers] = useState<Server[]>([]);
@@ -60,6 +61,31 @@ export function useServerDiscovery(accessToken: string) {
     [accessToken],
   );
 
+  const createServer = useCallback(
+    async (serverContent: CreateServerDTO) => {
+      if (!accessToken) return;
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        await serversService.createServer(accessToken, serverContent);
+      } catch (err) {
+        const message =
+          err instanceof NotFoundError
+            ? err.message
+            : "Não foi possível criar o servidor.";
+
+        setError(message);
+
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [accessToken],
+  );
+
   useEffect(() => {
     void loadServers();
   }, [loadServers]);
@@ -85,6 +111,7 @@ export function useServerDiscovery(accessToken: string) {
     error,
 
     joinServer,
+    createServer,
     refresh: loadServers,
   };
 }
