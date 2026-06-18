@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Loader2, Search, Users, X } from "lucide-react";
+import { CompassIcon, Loader2, Search, Users, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useJoinServerModal } from "@/hooks/use-join-server-modal";
@@ -63,6 +63,11 @@ export function JoinServerModal({
         </button>
 
         <div className=" p-6">
+
+          <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-primary/10">
+            <CompassIcon className="size-6 text-primary" aria-hidden="true" />
+          </div>
+          
           <h2 className="text-2xl font-bold text-foreground">
             Descobrir servidores
           </h2>

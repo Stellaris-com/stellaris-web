@@ -1,6 +1,6 @@
 "use client";
 
-import { Compass, Plus } from "lucide-react";
+import { Compass, CompassIcon, PersonStandingIcon, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Server } from "@/lib/types/domain";
 
@@ -8,7 +8,8 @@ interface ServerRailProps {
   servers: Server[];
   selectedId: string | null;
   onSelect: (serverId: string) => void;
-  onClick: () => void;
+  onCreateServer: () => void;
+  onJoinServer: () => void;
 }
 
 /**
@@ -19,7 +20,8 @@ export function ServerRail({
   servers,
   selectedId,
   onSelect,
-  onClick,
+  onCreateServer,
+  onJoinServer,
 }: ServerRailProps) {
   return (
     <nav
@@ -69,9 +71,17 @@ export function ServerRail({
       <RailButton
         aria-label="Adicionar servidor"
         className="bg-card text-online hover:bg-online hover:text-primary-foreground"
-        onClick={onClick}
+        onClick={onCreateServer}
       >
         <Plus className="size-6" aria-hidden="true" />
+      </RailButton>
+
+      <RailButton
+        aria-label="Entrar em um servidor"
+        className="bg-card text-online hover:bg-online hover:text-primary-foreground"
+        onClick={onJoinServer}
+      >
+        <CompassIcon className="size-6" aria-hidden="true" />
       </RailButton>
     </nav>
   );

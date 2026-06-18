@@ -10,6 +10,8 @@ import { useJoinServerModal } from "@/hooks/use-join-server-modal";
 import { useMyServers } from "@/hooks/use-my-servers";
 import { useServerDiscovery } from "@/hooks/use-servers-discovery";
 import { EmptyChatState } from "../chat/emptyChatState";
+import { CreateServerModal } from "../modals/createServerModal";
+import { useCreateServerModal } from "@/hooks/use-create-server-modal";
 
 interface ChatWorkspaceProps {
   session: AuthSession;
@@ -40,6 +42,9 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
   const { open: openJoinServerModal, close: closeJoinServerModal } =
     useJoinServerModal();
 
+  const { open: openCreateServerModal, close: closeCreateServerModal } =
+    useCreateServerModal();
+
   const { messages, sendMessage } = useChat(session.token, selectedId);
 
   const handlejoinonServerModal = async (roomId: string) => {
@@ -49,13 +54,20 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
     closeJoinServerModal();
   };
 
+  const handleCreateServerModal = async () => {
+    // await createServer()
+    await refresh();
+    closeCreateServerModal();
+  };
+
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-background text-foreground">
       <ServerRail
         servers={myServers}
         selectedId={selectedId}
         onSelect={selectServer}
-        onClick={openJoinServerModal}
+        onJoinServer={openJoinServerModal}
+        onCreateServer={openCreateServerModal}
       />
 
       <div className="flex flex-1">
@@ -84,6 +96,12 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
         error={error}
         isLoading={isLoadingOnServerDiscovery}
         onJoinServer={handlejoinonServerModal}
+      />
+
+      <CreateServerModal
+        error={null}
+        isLoading={false}
+        onCreateServer={handleCreateServerModal}
       />
     </div>
   );

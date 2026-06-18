@@ -3,12 +3,13 @@
 import { ChatWorkspaceSkeleton } from "@/components/fallback/chatWorkspaceSkeleton";
 import { Skeleton } from "@/components/fallback/skeleton";
 import { ChatWorkspace } from "@/components/workspace/chat-workspace";
+import { CreateServerModalProvider } from "@/context/provider/createServerModal";
 import { JoinServerModalProvider } from "@/context/provider/joinServerModalProvider";
 import { useAuth } from "@/hooks/use-auth";
 import { redirect } from "next/navigation";
 
 export default function Page() {
-  const { session, logout, isAuthenticated, isLoading, isLoadingSession } =
+  const { session, logout, isLoading, isLoadingSession } =
     useAuth();
 
   if (isLoadingSession || isLoading) {
@@ -22,7 +23,9 @@ export default function Page() {
   return (
     <main className="h-dvh w-full">
       <JoinServerModalProvider>
-        <ChatWorkspace session={session} onLogout={logout} />
+        <CreateServerModalProvider>
+          <ChatWorkspace session={session} onLogout={logout} />
+        </CreateServerModalProvider>
       </JoinServerModalProvider>
     </main>
   );
