@@ -1,13 +1,6 @@
 import { UserAvatar } from "@/components/shared/user-avatar";
 import type { ChatMessage } from "@/lib/types/domain";
-import { getUserAccentColor } from "@/lib/utils";
-
-function formatTime(iso: string): string {
-  return new Date(iso).toLocaleTimeString("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+import { formatDateTime, getUserAccentColor } from "@/lib/utils";
 
 /** Uma mensagem no chat (apresentação pura). */
 export function MessageItem({ message }: { message: ChatMessage }) {
@@ -26,7 +19,7 @@ export function MessageItem({ message }: { message: ChatMessage }) {
             dateTime={message.createdAt}
             className="text-xs text-muted-foreground"
           >
-            {formatTime(message.createdAt)}
+            {formatDateTime(message.createdAt)}
           </time>
         </div>
         <p className="text-sm leading-relaxed text-foreground/90 break-words">

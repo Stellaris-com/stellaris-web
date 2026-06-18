@@ -42,3 +42,34 @@ export function deriveAcronym(name: string): string {
     .join("")
     .toUpperCase();
 }
+
+/** Formata uma string ISO para uma string com formato de dia, data e hora :
+- Hoje às 14:58
+- Ontem às 18:21
+- 18/06/2026 às 09:10
+*/
+export function formatDateTime(iso: string): string {
+  const date = new Date(iso);
+
+  const today = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+
+  const isToday = date.toDateString() === today.toDateString();
+  const isYesterday = date.toDateString() === yesterday.toDateString();
+
+  const time = date.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  if (isToday) {
+    return `Hoje às ${time}`;
+  }
+
+  if (isYesterday) {
+    return `Ontem às ${time}`;
+  }
+
+  return `${date.toLocaleDateString("pt-BR")} às ${time}`;
+}
