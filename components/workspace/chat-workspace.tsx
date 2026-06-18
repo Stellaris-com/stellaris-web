@@ -9,6 +9,7 @@ import { JoinServerModal } from "../modals/joinServerModal";
 import { useJoinServerModal } from "@/hooks/use-join-server-modal";
 import { useMyServers } from "@/hooks/use-my-servers";
 import { useServerDiscovery } from "@/hooks/use-servers-discovery";
+import { EmptyChatState } from "../chat/emptyChatState";
 
 interface ChatWorkspaceProps {
   session: AuthSession;
@@ -57,13 +58,19 @@ export function ChatWorkspace({ session, onLogout }: ChatWorkspaceProps) {
         onClick={openJoinServerModal}
       />
 
-      <ChatPanel
-        serverName={selectedServer?.name ?? "Carregando..."}
-        channelName={DEFAULT_CHANNEL}
-        status={"connected"}
-        messages={messages}
-        onSend={sendMessage}
-      />
+      <div className="flex flex-1">
+        {selectedServer ? (
+          <ChatPanel
+            serverName={selectedServer?.name ?? "Carregando..."}
+            channelName={DEFAULT_CHANNEL}
+            status={"connected"}
+            messages={messages}
+            onSend={sendMessage}
+          />
+        ) : (
+          <EmptyChatState />
+        )}
+      </div>
 
       <MembersList
         members={selectedServer?.members ?? []}

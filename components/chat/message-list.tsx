@@ -22,7 +22,7 @@ export function MessageList({ messages, channelName }: MessageListProps) {
   }, [messages])
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-4">
+    <div className="flex-1 overflow-y-auto px-4 py-4 no-scrollbar">
       <div className="mb-6 flex flex-col gap-2 border-b border-border pb-6">
         <span className="flex size-16 items-center justify-center rounded-full bg-card text-muted-foreground">
           <Hash className="size-8" aria-hidden="true" />

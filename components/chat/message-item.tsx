@@ -22,7 +22,7 @@ export function MessageItem({ message }: { message: ChatMessage }) {
             {formatDateTime(message.createdAt)}
           </time>
         </div>
-        <p className="text-sm leading-relaxed text-foreground/90 break-words">
+        <p className="text-sm leading-relaxed text-foreground/90 wrap-break-words">
           {message.message}
         </p>
       </div>
