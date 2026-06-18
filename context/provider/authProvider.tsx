@@ -27,6 +27,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [session, setSession] = useState<AuthSession | null>(null);
   const [status, setStatus] = useState<AuthStatus>("idle");
+  const [isLoadingSession, setLoadingSession] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const login = useCallback(async (credentials: LoginCredentials) => {
@@ -90,14 +91,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const restoreSession = useCallback(async () => {
-    setStatus("loading");
+    setLoadingSession(true);
 
     try {
       const session = await authService.getSession();
       setSession(session);
-      setStatus("authenticated");
+      setLoadingSession(false);
     } catch {
-      setStatus("idle");
+      setLoadingSession(false);
       setSession(null);
     }
   }, []);
@@ -115,8 +116,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       login,
       register,
       logout,
+      isLoadingSession,
     }),
-    [session, status, error, login, register, logout],
+    [session, status, error, login, register, logout, isLoadingSession],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

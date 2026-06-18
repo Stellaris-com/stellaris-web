@@ -1,6 +1,7 @@
 "use client";
 
 import { LoginScreen } from "@/components/auth/login-screen";
+import { Skeleton } from "@/components/fallback/skeleton";
 import { useAuth } from "@/hooks/use-auth";
 import { redirect } from "next/navigation";
 

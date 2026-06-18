@@ -109,3 +109,13 @@
     @apply font-sans;
   }
 }
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-150%);
+  }
+
+  to {
+    transform: translateX(450%);
+  }
+}

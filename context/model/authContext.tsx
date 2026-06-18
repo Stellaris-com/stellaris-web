@@ -5,12 +5,12 @@ import {
 } from "@/lib/types/domain";
 import { createContext } from "react";
 
-
 export interface AuthContextData {
   session: AuthSession | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  isLoadingSession: boolean;
 
   login(credentials: LoginCredentials): Promise<void>;
   register(credentials: RegisterCredentials): Promise<void>;
