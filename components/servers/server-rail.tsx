@@ -29,11 +29,12 @@ export function ServerRail({
       className="flex h-full w-[72px] shrink-0 flex-col items-center gap-2 bg-rail py-3"
     >
       <RailButton
-        aria-label="Mensagens diretas"
-        active
-        className="bg-primary text-primary-foreground"
+        aria-label="Entrar em um servidor"
+        title="Entrar em um servidor"
+        className="bg-card text-online hover:bg-online hover:text-primary-foreground"
+        onClick={onJoinServer}
       >
-        <Compass className="size-6" aria-hidden="true" />
+        <CompassIcon className="size-6" aria-hidden="true" />
       </RailButton>
 
       <span className="h-0.5 w-8 rounded-full bg-border" aria-hidden="true" />
@@ -52,6 +53,7 @@ export function ServerRail({
               />
               <RailButton
                 aria-label={server.name}
+                title={server.name}
                 aria-current={isActive ? "true" : undefined}
                 active={isActive}
                 onClick={() => onSelect(server.id)}
@@ -70,18 +72,11 @@ export function ServerRail({
 
       <RailButton
         aria-label="Adicionar servidor"
+        title="Adicionar servidor"
         className="bg-card text-online hover:bg-online hover:text-primary-foreground"
         onClick={onCreateServer}
       >
         <Plus className="size-6" aria-hidden="true" />
-      </RailButton>
-
-      <RailButton
-        aria-label="Entrar em um servidor"
-        className="bg-card text-online hover:bg-online hover:text-primary-foreground"
-        onClick={onJoinServer}
-      >
-        <CompassIcon className="size-6" aria-hidden="true" />
       </RailButton>
     </nav>
   );
